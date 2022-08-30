@@ -23,6 +23,9 @@ const val notificationProgressId = 3
 
 const val KEY_TEXT_REPLY = "key_text_reply"
 
+const val NOTIFICATION_GROUP = "notification group"
+const val summeryId = 4
+
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         val regularIntentButton = findViewById<Button>(R.id.notification_regular_button)
         regularIntentButton.setOnClickListener {
             createNotificationIntentRegular()
+            createSummeryNotification()
         }
 
         val specialIntentButton = findViewById<Button>(R.id.notification_special_button)
@@ -124,6 +128,7 @@ class MainActivity : AppCompatActivity() {
 //            .addAction(R.drawable.ic_baseline_cake_24, "Action", actionPendingIntent) //アクションボタンの追加
             .addAction(action)
             .setAutoCancel(true)
+            .setGroup(NOTIFICATION_GROUP)
 
         val notificationManager: NotificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -172,10 +177,31 @@ class MainActivity : AppCompatActivity() {
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(specialPendingIntent)
             .setAutoCancel(true)
+            .setGroup(NOTIFICATION_GROUP)
+
 
         val notificationManager: NotificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(notificationSpecialId, builder.build())
+    }
+
+    /*
+    RegularとSpecial両方通知したとき、通知を１つにグループにまとめる。
+    展開すると各通知ごとに操作することができる。
+    グループでまとめる時の概要を表示する通知を作成。
+    この関数はRegularのClickListenerに追加した。Regularが1件通知された場合はグループ表示はされない。
+     */
+    private fun createSummeryNotification(){
+        val summaryNotification = NotificationCompat.Builder(this, CHANNEL_ID_SPECIAL)
+            .setContentTitle("Summary")
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setGroup(NOTIFICATION_GROUP)
+            .setGroupSummary(true)
+            .build()
+
+        val notificationManager: NotificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.notify(summeryId, summaryNotification)
     }
 
     /*
