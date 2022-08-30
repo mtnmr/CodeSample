@@ -17,7 +17,7 @@ class ReplyReceiver:BroadcastReceiver() {
         }
 
         context?.apply {
-            val repliedNotification = NotificationCompat.Builder(context, CHANNEL_ID_Regular)
+            val repliedNotification = NotificationCompat.Builder(context, CHANNEL_ID_REGULAR)
             .setSmallIcon(R.drawable.ic_baseline_cake_24)
             .setContentText(replyText.toString())
             .build()

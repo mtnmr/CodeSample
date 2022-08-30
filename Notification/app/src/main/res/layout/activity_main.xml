@@ -17,6 +17,7 @@
             android:id="@+id/notification_regular_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:text="Notification(Regular)"/>
 
         <Button
@@ -25,6 +26,14 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:text="Notification(Special)"/>
+
+
+        <Button
+            android:id="@+id/notification_progress_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="Notification(Progress Bar)"/>
 
     </LinearLayout>
 

@@ -2,7 +2,10 @@
     <string name="app_name">Notification</string>
     <string name="channel_description_regular">notification RegularActivity Intent sample</string>
     <string name="channel_description_special">notification SpecialActivity Intent sample</string>
+    <string name="channel_description_progress">notification Progress show sample</string>
 
     <string name="regular_activity">Regular Activity</string>
     <string name="special_activity">Special Activity</string>
+
+    <string name="progress_show">Progress show</string>
 </resources>
