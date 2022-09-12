@@ -4,6 +4,7 @@ import android.app.*
 import android.app.Notification.FOREGROUND_SERVICE_IMMEDIATE
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.ACTION_SEND
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
@@ -23,6 +24,11 @@ class ForegroundService:Service() {
                     PendingIntent.FLAG_IMMUTABLE)
             }
 
+        val stopIntent = Intent(this, MyBroadcastReceiver::class.java).apply {
+            action = ACTION_SEND
+        }
+        val stopPendingIntent = PendingIntent.getBroadcast(this, 0, stopIntent, PendingIntent.FLAG_IMMUTABLE)
+
         val notification: Notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("foreground service")
             .setContentText("foreground service running")
@@ -30,25 +36,28 @@ class ForegroundService:Service() {
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setForegroundServiceBehavior(FOREGROUND_SERVICE_IMMEDIATE) //通知をすぐに表示する
+            .addAction(R.drawable.ic_launcher_foreground, "STOP", stopPendingIntent)
             .build()
 
-        Thread(
-            Runnable {
-                Log.d("service test", "start")
-                (0..5).map {
-                    Thread.sleep(1000)
+        Log.d("service test", "start")
 
-                }
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    stopForeground(Service.STOP_FOREGROUND_REMOVE)
-                    Log.d("service test", "finish A")
-                }else{
-                    stopForeground(true)
-                    Log.d("service test", "finish B")
-                }
-
-            }).start()
+//        Thread(
+//            Runnable {
+//                Log.d("service test", "start")
+//                (0..5).map {
+//                    Thread.sleep(1000)
+//
+//                }
+//
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                    stopForeground(Service.STOP_FOREGROUND_REMOVE)
+//                    Log.d("service test", "finish A")
+//                }else{
+//                    stopForeground(true)
+//                    Log.d("service test", "finish B")
+//                }
+//
+//            }).start()
 
 
         startForeground(1, notification)

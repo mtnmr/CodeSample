@@ -29,6 +29,12 @@
         </activity>
 
         <service android:name=".ForegroundService"/>
+        <receiver android:name=".MyBroadcastReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="jp.test.tryforegroundservicesample.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
