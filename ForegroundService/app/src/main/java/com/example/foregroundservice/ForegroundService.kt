@@ -17,8 +17,6 @@ class ForegroundService:Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        Log.d("service test", "start")
-
         val pendingIntent: PendingIntent =
             Intent(this, MainActivity::class.java).let { notificationIntent ->
                 PendingIntent.getActivity(this, 0, notificationIntent,
@@ -31,7 +29,7 @@ class ForegroundService:Service() {
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setForegroundServiceBehavior(FOREGROUND_SERVICE_IMMEDIATE)
+            .setForegroundServiceBehavior(FOREGROUND_SERVICE_IMMEDIATE) //通知をすぐに表示する
             .build()
 
         Thread(
@@ -43,12 +41,12 @@ class ForegroundService:Service() {
                 }
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    stopForeground(Service.STOP_FOREGROUND_DETACH)
+                    stopForeground(Service.STOP_FOREGROUND_REMOVE)
+                    Log.d("service test", "finish A")
                 }else{
                     stopForeground(true)
+                    Log.d("service test", "finish B")
                 }
-
-                Log.d("service test", "finish")
 
             }).start()
 
