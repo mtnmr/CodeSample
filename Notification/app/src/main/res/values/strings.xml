@@ -8,4 +8,6 @@
     <string name="special_activity">Special Activity</string>
 
     <string name="progress_show">Progress show</string>
+    
+    <string name="fcm_notification_channel_id">FCM push notification</string>
 </resources>
